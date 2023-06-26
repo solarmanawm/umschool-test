@@ -6,7 +6,9 @@ import AppFooter from '@/widgets/footer/ui/index.vue';
 <template>
     <div class="w-full flex flex-col text-center min-h-screen">
         <app-header/>
-        <main class="flex-1">main</main>
+        <main class="flex-1">
+            <router-view></router-view>
+        </main>
         <app-footer />
     </div>
 </template>
