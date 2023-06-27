@@ -22,7 +22,7 @@ export default defineComponent({
 
    props: {
       level: {
-         type: Number,
+         type: [Number, String],
          required: true
       },
    },
