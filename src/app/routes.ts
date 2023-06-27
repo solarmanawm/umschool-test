@@ -1,9 +1,25 @@
 import Home from '@/pages/home/ui/index.vue';
 
+export const routeNames = {
+    home: 'home',
+    films: 'films',
+    film: 'film',
+    people: 'people',
+    person: 'person',
+    planets: 'planets',
+    planet: 'planet',
+    species: 'species',
+    specie: 'specie',
+    starships: 'starships',
+    starship: 'starship',
+    vehicles: 'vehicles',
+    vehicle: 'vehicle',
+};
+
 export const routes = {
     home: {
         path: '/',
-        name: 'home',
+        name: routeNames.home,
         component: Home,
         meta: {
             title: 'Home',
@@ -11,15 +27,20 @@ export const routes = {
     },
     films: {
         path: '/films',
-        name: 'films',
+        name: routeNames.films,
         component: () => import('@/pages/films/ui/index.vue'),
         meta: {
             title: 'Films',
         },
     },
+    film: {
+        path: '/film/:id',
+        name: routeNames.film,
+        component: () => import('@/pages/film/ui/index.vue'),
+    },
     people: {
         path: '/people',
-        name: 'people',
+        name: routeNames.people,
         component: () => import('@/pages/people/ui/index.vue'),
         meta: {
             title: 'People',
@@ -27,7 +48,7 @@ export const routes = {
     },
     planets: {
         path: '/planets',
-        name: 'planets',
+        name: routeNames.planets,
         component: () => import('@/pages/planets/ui/index.vue'),
         meta: {
             title: 'Planets',
@@ -35,7 +56,7 @@ export const routes = {
     },
     species: {
         path: '/species',
-        name: 'species',
+        name: routeNames.species,
         component: () => import('@/pages/species/ui/index.vue'),
         meta: {
             title: 'Species',
@@ -43,7 +64,7 @@ export const routes = {
     },
     starships: {
         path: '/starships',
-        name: 'starships',
+        name: routeNames.starships,
         component: () => import('@/pages/starships/ui/index.vue'),
         meta: {
             title: 'Starships',
@@ -51,7 +72,7 @@ export const routes = {
     },
     vehicles: {
         path: '/vehicles',
-        name: 'vehicles',
+        name: routeNames.vehicles,
         component: () => import('@/pages/vehicles/ui/index.vue'),
         meta: {
             title: 'Vehicles',
