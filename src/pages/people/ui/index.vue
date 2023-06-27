@@ -1,3 +1,9 @@
+<script setup lang="ts">
+import { useRoute } from 'vue-router';
+
+const route = useRoute();
+</script>
+
 <template>
-    <div>People</div>
+    <div>{{ route.meta.title }}</div>
 </template>
