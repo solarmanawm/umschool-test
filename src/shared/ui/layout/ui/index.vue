@@ -15,7 +15,7 @@ export default {
     <div class="my-12">
         <div
             v-if="hasTitle"
-            class=""
+            class="mb-12"
         >
             <h1 class="text-white text-4xl">
                 <slot name="title"></slot>
