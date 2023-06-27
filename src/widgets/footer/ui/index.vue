@@ -7,7 +7,7 @@ export default {
 </script>
 
 <template>
-    <footer>
+    <footer class="border-t border-t-gray-800 py-8 text-gray-400">
         <p>footer</p>
     </footer>
 </template>

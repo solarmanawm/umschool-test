@@ -4,7 +4,7 @@ import AppFooter from '@/widgets/footer/ui/index.vue';
 </script>
 
 <template>
-    <div class="w-full flex flex-col text-center min-h-screen">
+    <div class="w-full flex flex-col text-center min-h-screen bg-gray-900">
         <app-header/>
         <main class="flex-1">
             <router-view></router-view>

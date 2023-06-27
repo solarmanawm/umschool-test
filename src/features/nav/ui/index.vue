@@ -19,7 +19,11 @@ export default {
 </script>
 
 <template>
-    <nav>
-        <router-link v-for="link of navLinks" :to="link.to">{{ link.title }}</router-link>
+    <nav class="flex justify-between max-w-xl w-full">
+        <router-link
+            v-for="link of navLinks"
+            :to="link.to"
+            class="text-white text-sm uppercase hover:text-yellow-500"
+        >{{ link.title }}</router-link>
     </nav>
 </template>
