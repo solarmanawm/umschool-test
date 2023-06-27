@@ -6,17 +6,23 @@ import AppColumn from '@/shared/ui/column/ui/index.vue';
 import AppContainer from '@/shared/ui/container/ui/index.vue';
 import AppRow from '@/shared/ui/row/ui/index.vue';
 import AppCard from '@/shared/ui/card/ui/index.vue';
+import AppHeader from '@/shared/ui/h/ui/index.vue';
+import AppAnchor from '@/shared/ui/anchor/ui/index.vue';
 import { useRoute } from 'vue-router';
+import { routeNames } from '@/app/routes';
 import { getFilms } from '@/shared/api/films';
 
 const route = useRoute();
 
 const isLoading = ref(true);
-const films = ref<Film[]>([])
+const films = ref<(Film & { id: string })[]>([])
 
 onBeforeMount(async () => {
     const { results } = await getFilms();
-    films.value = results;
+    films.value = results.map((film: Film) => ({
+        ...film,
+        id: film.url.split('/').filter(e => !!e).pop(),
+    }));
     isLoading.value = false;
 });
 </script>
@@ -34,10 +40,18 @@ onBeforeMount(async () => {
                             md="4"
                             lg="4"
                             xl="4"
-                            class="mt-4"
+                            class="mt-4 flex"
                         >
-                            <app-card>
-                                <p>{{ film.episode_id }}</p>
+                            <app-card class="flex flex-col justify-between">
+                                <div class="mb-4">
+                                    <p class="uppercase text-xs tracking-[3px] text-yellow-500">Episode #{{ film.episode_id }}</p>
+                                    <app-header
+                                        level="3"
+                                        class="text-white text-xl"
+                                    >{{ film.title }}</app-header>
+                                    <p class="mt-8 text-sm">{{ film.opening_crawl }}</p>
+                                </div>
+                                <p><app-anchor class="text-sm uppercase font-bold text-yellow-500" :to="{ name: routeNames.film, params: { id: film.id }}">Details</app-anchor></p>
                             </app-card>
                         </app-column>
                     </app-row>
