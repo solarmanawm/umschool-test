@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import AppAnchor from '@/shared/anchor/ui/index.vue';
 import { routes } from '@/app/routes';
 
 const navLinks = [
@@ -20,10 +21,10 @@ export default {
 
 <template>
     <nav class="flex justify-between max-w-xl w-full">
-        <router-link
+        <app-anchor
             v-for="link of navLinks"
             :to="link.to"
             class="text-white text-sm uppercase hover:text-yellow-500"
-        >{{ link.title }}</router-link>
+        >{{ link.title }}</app-anchor>
     </nav>
 </template>
