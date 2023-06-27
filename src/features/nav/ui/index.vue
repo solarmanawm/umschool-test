@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import AppAnchor from '@/shared/anchor/ui/index.vue';
+import AppAnchor from '@/shared/ui/anchor/ui/index.vue';
 import { routes } from '@/app/routes';
 
 const navLinks = [

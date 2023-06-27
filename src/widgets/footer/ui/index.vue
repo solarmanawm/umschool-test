@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import AppAnchor from '@/shared/anchor/ui/index.vue';
-import AppContainer from '@/shared/container/ui/index.vue';
+import AppAnchor from '@/shared/ui/anchor/ui/index.vue';
+import AppContainer from '@/shared/ui/container/ui/index.vue';
 </script>
 
 <script lang="ts">
