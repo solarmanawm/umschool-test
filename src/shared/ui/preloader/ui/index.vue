@@ -2,10 +2,12 @@
 import AppSpinner from '@/shared/ui/spinner/ui/index.vue';
 interface Props {
     isLoading: boolean;
-    hasError: boolean;
+    hasError?: boolean;
 }
 
-const props = defineProps<Props>();
+const props = withDefaults(defineProps<Props>(), {
+    hasError: false,
+});
 </script>
 
 <script lang="ts">

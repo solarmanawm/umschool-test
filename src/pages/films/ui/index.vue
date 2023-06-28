@@ -15,19 +15,25 @@ import { getFilms } from '@/shared/api/films';
 const route = useRoute();
 
 const isLoading = ref(true);
-const films = ref<(Film & { id: string })[]>([])
+const hasError = ref(false);
+let films: (Film & { id: string })[] = [];
 
 onBeforeMount(async () => {
-    const { results } = await getFilms();
-    films.value = results.map((film: Film) => {
-        const id = film.url.split('/').filter(e => !!e).pop()!;
+    try {
+        const { results } = await getFilms();
+        films = results.map((film: Film) => {
+            const id = film.url.split('/').filter(e => !!e).pop()!;
 
-        return {
-            ...film,
-            id,
-        };
-    });
-    isLoading.value = false;
+            return {
+                ...film,
+                id,
+            };
+        });
+    } catch (error) {
+        hasError.value = true;
+    } finally {
+        isLoading.value = false;
+    }
 });
 </script>
 
@@ -35,7 +41,10 @@ onBeforeMount(async () => {
     <app-layout>
         <template #title v-if="route.meta.title">{{ route.meta.title }}</template>
         <template #content>
-            <app-preloader :isLoading="isLoading">
+            <app-preloader
+                :isLoading="isLoading"
+                :hasError="hasError"
+            >
                 <app-container>
                     <app-row class="-mt-4">
                         <app-column

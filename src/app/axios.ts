@@ -4,7 +4,7 @@ const BASE_URL = 'https://swapi.dev/api/';
 
 const axiosInstance = axios.create({
     baseURL: BASE_URL,
-    timeout: 7000,
+    timeout: 6000,
     headers: {
         'Content-Type': 'application/json',
     },
