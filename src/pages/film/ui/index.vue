@@ -7,11 +7,15 @@ import AppCard from '@/shared/ui/card/ui/index.vue';
 import AppHeader from '@/shared/ui/h/ui/index.vue';
 import AppButton from '@/shared/ui/button/ui/index.vue';
 import AppDetails from '@/shared/ui/details/ui/index.vue';
-import { getId, getCharacterDetails } from '@/app/helpers';
+import { getId, getCharacterDetails, getPlanetDetails, getStarshipDetails, getVehicleDetails, getSpeciesDetails } from '@/app/helpers';
 import { useRoute, useRouter } from 'vue-router';
 import { routeNames } from '@/app/routes';
 import { getFilmById } from '@/shared/api/films';
 import { getCharacterById } from '@/shared/api/characters';
+import { getPlanetById } from '@/shared/api/planets';
+import { getStarshipById } from '@/shared/api/starships';
+import { getVehicleById } from '@/shared/api/vehicles';
+import { getSpeciesById } from '@/shared/api/species';
 
 let film: Film = {} as Film;
 const isLoading = ref(true);
@@ -20,6 +24,7 @@ let characterDetails: Detail[] = []
 let planetsDetails: Detail[] = []
 let starshipsDetails: Detail[] = []
 let vehiclesDetails: Detail[] = []
+let speciesDetails: Detail[] = []
 // const planets = ref([]);
 // const starships = ref([]);
 // const vehicles = ref([]);
@@ -31,6 +36,18 @@ onBeforeMount(async () => {
     film = await getFilmById(id);
     const characters: Character[] = await Promise.all(film.characters.map(getId).map(getCharacterById));
     characterDetails = getCharacterDetails(characters);
+
+    const planets: Planet[] = await Promise.all(film.planets.map(getId).map(getPlanetById));
+    planetsDetails = getPlanetDetails(planets);
+
+    const starships: Starship[] = await Promise.all(film.starships.map(getId).map(getStarshipById));
+    starshipsDetails = getStarshipDetails(starships);
+
+    const vehicles: Vehicle[] = await Promise.all(film.vehicles.map(getId).map(getVehicleById));
+    vehiclesDetails = getVehicleDetails(vehicles);
+
+    const species: Species[] = await Promise.all(film.species.map(getId).map(getSpeciesById));
+    speciesDetails = getSpeciesDetails(species);
 
     isLoading.value = false;
 });
@@ -68,21 +85,28 @@ const goBackToFilms = () => {
                         class="my-8 text-white text-2xl"
                     >Planets</app-header>
 
-                    <!-- <app-details :details="planets" /> -->
+                    <app-details :details="planetsDetails" />
 
                     <app-header
                         level="4"
                         class="my-8 text-white text-2xl"
                     >Starships</app-header>
 
-                    <!-- <app-details :details="starships" /> -->
+                    <app-details :details="starshipsDetails" />
 
                     <app-header
                         level="4"
                         class="my-8 text-white text-2xl"
                     >Vehicles</app-header>
 
-                    <!-- <app-details :details="vehicles" /> -->
+                    <app-details :details="vehiclesDetails" />
+
+                    <app-header
+                        level="4"
+                        class="my-8 text-white text-2xl"
+                    >Species</app-header>
+
+                    <app-details :details="speciesDetails" />
 
                     <p>
                         <app-button
