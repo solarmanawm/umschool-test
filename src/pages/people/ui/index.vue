@@ -2,9 +2,7 @@
 import { onBeforeMount, ref } from 'vue';
 import AppLayout from '@/shared/ui/layout/ui/index.vue';
 import AppPreloader from '@/shared/ui/preloader/ui/index.vue';
-import AppColumn from '@/shared/ui/column/ui/index.vue';
 import AppContainer from '@/shared/ui/container/ui/index.vue';
-import AppRow from '@/shared/ui/row/ui/index.vue';
 import AppCard from '@/shared/ui/card/ui/index.vue';
 import AppHeader from '@/shared/ui/h/ui/index.vue';
 import AppAnchor from '@/shared/ui/anchor/ui/index.vue';

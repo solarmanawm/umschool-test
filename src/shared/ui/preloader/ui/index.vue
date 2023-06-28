@@ -1,10 +1,14 @@
 <script setup lang="ts">
+import { useRouter } from 'vue-router';
 import AppSpinner from '@/shared/ui/spinner/ui/index.vue';
+import AppButton from '@/shared/ui/button/ui/index.vue';
+
 interface Props {
     isLoading: boolean;
     hasError?: boolean;
 }
 
+const router = useRouter();
 const props = withDefaults(defineProps<Props>(), {
     hasError: false,
 });
@@ -34,6 +38,16 @@ export default {
         </svg>
         <p class="mt-12 text-white">Something went wrong. Please, refresh the page.</p>
         <p class="mt-2 text-yellow-500 text-sm">Perhaps, the issue is about a request timeout.</p>
+        <p class="mt-4">
+            <p>
+                <app-button
+                    @click="router.go"
+                    variant="yellow"
+                    outline
+                    class="mt-12"
+                >Refresh</app-button>
+            </p>
+        </p>
     </div>
     <template v-else-if="isLoading">
         <div class="w-full h-60 flex items-center justify-center">
