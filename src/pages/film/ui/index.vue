@@ -21,6 +21,7 @@ import { useGoTo } from '@/shared/use/goTo';
 
 const goTo = useGoTo();
 const isLoading = ref(true);
+const hasError = ref(false);
 
 let film: Film = {} as Film;
 let characterDetails: Detail[] = []
@@ -34,7 +35,13 @@ onBeforeMount(async () => {
     const { id } = route.params;
 
     try {
-        film = await getFilmById(id as string);
+        try {
+            film = await getFilmById(id as string);
+        } catch (error) {
+            hasError.value = true;
+
+            throw error;
+        }
 
         const characters: Character[] = await Promise.all(film.characters.map(getId).map(getCharacterById));
         characterDetails = useDetails<Character>(characters, 'people');
@@ -50,8 +57,6 @@ onBeforeMount(async () => {
 
         const species: Species[] = await Promise.all(film.species.map(getId).map(getSpeciesById));
         speciesDetails = useDetails<Species>(species, 'species');
-    } catch (error) {
-        ;
     } finally {
         isLoading.value = false;
     }
@@ -59,7 +64,10 @@ onBeforeMount(async () => {
 </script>
 
 <template>
-    <app-preloader :isLoading="isLoading">
+    <app-preloader
+        :isLoading="isLoading"
+        :hasError="hasError"
+    >
         <app-layout>
             <template #title v-if="film.title">{{ film.title }}</template>
             <template #content>
