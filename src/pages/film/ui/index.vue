@@ -56,7 +56,7 @@ onBeforeMount(async () => {
         vehiclesDetails = useDetails<Vehicle>(vehicles, 'vehicle');
 
         const species: Species[] = await Promise.all(film.species.map(getId).map(getSpeciesById));
-        speciesDetails = useDetails<Species>(species, 'specie');
+        speciesDetails = useDetails<Species>(species, 'species');
     } finally {
         isLoading.value = false;
     }
