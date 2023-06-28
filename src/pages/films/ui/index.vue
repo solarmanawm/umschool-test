@@ -19,10 +19,14 @@ const films = ref<(Film & { id: string })[]>([])
 
 onBeforeMount(async () => {
     const { results } = await getFilms();
-    films.value = results.map((film: Film) => ({
-        ...film,
-        id: film.url.split('/').filter(e => !!e).pop(),
-    }));
+    films.value = results.map((film: Film) => {
+        const id = film.url.split('/').filter(e => !!e).pop()!;
+
+        return {
+            ...film,
+            id,
+        };
+    });
     isLoading.value = false;
 });
 </script>

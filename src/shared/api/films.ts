@@ -5,34 +5,13 @@ interface FilmsResponse {
 }
 
 export const getFilms = async (): Promise<FilmsResponse> => {
-    try {
-        const response = await axios.get('/films/');
+    const response = await axios.get<FilmsResponse>('/films/');
 
-        return response.data;
-    } catch (error: any) {
-        const dummyResponse = await import('@/dummy/films');
-        const { results } = dummyResponse.default;
-
-        return {
-            results,
-        };
-    }
+    return response.data;
 };
 
-export const getFilmById = async (id: number) => {
-    try {
-        const response = await axios.get(`/films/${id}`);
+export const getFilmById = async (id: number | string): Promise<Film> => {
+    const response = await axios.get<Film>(`/films/${id}`);
 
-        return response.data;
-    } catch (error: any) {
-        const dummyResponse = await import('@/dummy/films');
-        const { results } = dummyResponse.default;
-        const film = results.find((film: Film) => {
-            const currentId = film.url.split('/').filter(e => !!e).pop();
-
-            return currentId === id.toString();
-        });
-
-        return film;
-    }
+    return response.data;
 };

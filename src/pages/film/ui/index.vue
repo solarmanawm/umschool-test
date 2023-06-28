@@ -8,7 +8,7 @@ import AppHeader from '@/shared/ui/h/ui/index.vue';
 import AppButton from '@/shared/ui/button/ui/index.vue';
 import AppDetails from '@/shared/ui/details/ui/index.vue';
 import { getId } from '@/app/helpers';
-import { useRoute, useRouter } from 'vue-router';
+import { useRoute } from 'vue-router';
 import { routeNames } from '@/app/routes';
 import { getFilmById } from '@/shared/api/films';
 import { getCharacterById } from '@/shared/api/characters';
@@ -17,10 +17,12 @@ import { getStarshipById } from '@/shared/api/starships';
 import { getVehicleById } from '@/shared/api/vehicles';
 import { getSpeciesById } from '@/shared/api/species';
 import { useDetails } from '@/shared/use/details';
+import { useGoTo } from '@/shared/use/goTo';
+
+const goTo = useGoTo();
+const isLoading = ref(true);
 
 let film: Film = {} as Film;
-const isLoading = ref(true);
-const router = useRouter();
 let characterDetails: Detail[] = []
 let planetsDetails: Detail[] = []
 let starshipsDetails: Detail[] = []
@@ -31,30 +33,29 @@ onBeforeMount(async () => {
     const route = useRoute();
     const { id } = route.params;
 
-    film = await getFilmById(id);
-    const characters: Character[] = await Promise.all(film.characters.map(getId).map(getCharacterById));
-    characterDetails = useDetails<Character>(characters, 'people');
+    try {
+        film = await getFilmById(id as string);
 
-    const planets: Planet[] = await Promise.all(film.planets.map(getId).map(getPlanetById));
-    planetsDetails = useDetails<Planet>(planets, 'planets');
+        const characters: Character[] = await Promise.all(film.characters.map(getId).map(getCharacterById));
+        characterDetails = useDetails<Character>(characters, 'people');
 
-    const starships: Starship[] = await Promise.all(film.starships.map(getId).map(getStarshipById));
-    starshipsDetails = useDetails<Starship>(starships, 'starships');
+        const planets: Planet[] = await Promise.all(film.planets.map(getId).map(getPlanetById));
+        planetsDetails = useDetails<Planet>(planets, 'planets');
 
-    const vehicles: Vehicle[] = await Promise.all(film.vehicles.map(getId).map(getVehicleById));
-    vehiclesDetails = useDetails<Vehicle>(vehicles, 'vehicles');
+        const starships: Starship[] = await Promise.all(film.starships.map(getId).map(getStarshipById));
+        starshipsDetails = useDetails<Starship>(starships, 'starships');
 
-    const species: Species[] = await Promise.all(film.species.map(getId).map(getSpeciesById));
-    speciesDetails = useDetails<Species>(species, 'species');
+        const vehicles: Vehicle[] = await Promise.all(film.vehicles.map(getId).map(getVehicleById));
+        vehiclesDetails = useDetails<Vehicle>(vehicles, 'vehicles');
 
-    isLoading.value = false;
+        const species: Species[] = await Promise.all(film.species.map(getId).map(getSpeciesById));
+        speciesDetails = useDetails<Species>(species, 'species');
+    } catch (error) {
+        ;
+    } finally {
+        isLoading.value = false;
+    }
 });
-
-const goBackToFilms = () => {
-    return router.push({
-        name: routeNames.films,
-    });
-};
 </script>
 
 <template>
@@ -71,44 +72,54 @@ const goBackToFilms = () => {
                         <p class="italic">{{ film.opening_crawl }}</p>
                     </app-card>
 
-                    <app-header
-                        level="4"
-                        class="my-8 text-white text-2xl"
-                    >Characters</app-header>
+                    <template v-if="characterDetails.length">
+                        <app-header
+                            level="4"
+                            class="my-8 text-white text-2xl"
+                        >Characters</app-header>
 
-                    <app-details :details="characterDetails" />
+                        <app-details :details="characterDetails" />
+                    </template>
 
-                    <app-header
-                        level="4"
-                        class="my-8 text-white text-2xl"
-                    >Planets</app-header>
+                    <template v-if="planetsDetails.length">
+                        <app-header
+                            level="4"
+                            class="my-8 text-white text-2xl"
+                        >Planets</app-header>
 
-                    <app-details :details="planetsDetails" />
+                        <app-details :details="planetsDetails" />
+                    </template>
 
-                    <app-header
-                        level="4"
-                        class="my-8 text-white text-2xl"
-                    >Starships</app-header>
+                    <template v-if="starshipsDetails.length">
+                        <app-header
+                            level="4"
+                            class="my-8 text-white text-2xl"
+                        >Starships</app-header>
 
-                    <app-details :details="starshipsDetails" />
+                        <app-details :details="starshipsDetails" />
+                    </template>
 
-                    <app-header
-                        level="4"
-                        class="my-8 text-white text-2xl"
-                    >Vehicles</app-header>
+                    <template v-if="vehiclesDetails.length">
+                        <app-header
+                            level="4"
+                            class="my-8 text-white text-2xl"
+                        >Vehicles</app-header>
 
-                    <app-details :details="vehiclesDetails" />
+                        <app-details :details="vehiclesDetails" />
+                    </template>
 
-                    <app-header
-                        level="4"
-                        class="my-8 text-white text-2xl"
-                    >Species</app-header>
+                    <template v-if="speciesDetails.length">
+                        <app-header
+                            level="4"
+                            class="my-8 text-white text-2xl"
+                        >Species</app-header>
 
-                    <app-details :details="speciesDetails" />
+                        <app-details :details="speciesDetails" />
+                    </template>
 
                     <p>
                         <app-button
-                            @click="goBackToFilms"
+                            @click="goTo({ name: routeNames.films })"
                             variant="white"
                             outline
                             class="mt-12"

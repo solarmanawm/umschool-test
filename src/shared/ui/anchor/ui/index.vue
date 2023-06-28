@@ -1,7 +1,7 @@
 <script setup lang="ts">
 interface Props {
     href?: string;
-    to?: string;
+    to?: string | object;
 }
 
 const props = defineProps<Props>();
