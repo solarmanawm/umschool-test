@@ -36,7 +36,6 @@ export const useDetailsSource = (source: string[]) => {
 
     const fetch = async function<T>(): Promise<T[]> {
         let fn;
-        console.log('source[0]: ', source[0]);
 
         if (isFilm(source[0])) {
             fn = getFilmById;
