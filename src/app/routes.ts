@@ -46,6 +46,11 @@ export const routes = {
             title: 'People',
         },
     },
+    person: {
+        path: '/people/:id',
+        name: routeNames.person,
+        component: () => import('@/pages/person/ui/index.vue'),
+    },
     planets: {
         path: '/planets',
         name: routeNames.planets,
