@@ -47,16 +47,16 @@ onBeforeMount(async () => {
         characterDetails = useDetails<Character>(characters, 'people');
 
         const planets: Planet[] = await Promise.all(film.planets.map(getId).map(getPlanetById));
-        planetsDetails = useDetails<Planet>(planets, 'planets');
+        planetsDetails = useDetails<Planet>(planets, 'planet');
 
         const starships: Starship[] = await Promise.all(film.starships.map(getId).map(getStarshipById));
-        starshipsDetails = useDetails<Starship>(starships, 'starships');
+        starshipsDetails = useDetails<Starship>(starships, 'starship');
 
         const vehicles: Vehicle[] = await Promise.all(film.vehicles.map(getId).map(getVehicleById));
-        vehiclesDetails = useDetails<Vehicle>(vehicles, 'vehicles');
+        vehiclesDetails = useDetails<Vehicle>(vehicles, 'vehicle');
 
         const species: Species[] = await Promise.all(film.species.map(getId).map(getSpeciesById));
-        speciesDetails = useDetails<Species>(species, 'species');
+        speciesDetails = useDetails<Species>(species, 'specie');
     } finally {
         isLoading.value = false;
     }

@@ -42,7 +42,8 @@ interface Character extends DetailSource {
 }
 
 interface DetailSource {
-    name: string;
+    name?: string;
+    title?: string;
     url: string;
 }
 

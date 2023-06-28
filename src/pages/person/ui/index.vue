@@ -23,8 +23,8 @@ const goTo = useGoTo();
 const isLoading = ref(true);
 const hasError = ref(false);
 
-let film: Film = {} as Film;
-let characterDetails: Detail[] = []
+let character: Character = {} as Character;
+let filmsDetails: Detail[] = []
 let planetsDetails: Detail[] = []
 let starshipsDetails: Detail[] = []
 let vehiclesDetails: Detail[] = []
@@ -36,26 +36,26 @@ onBeforeMount(async () => {
 
     try {
         try {
-            film = await getFilmById(id as string);
+            character = await getCharacterById(id as string);
         } catch (error) {
             hasError.value = true;
 
             throw error;
         }
 
-        const characters: Character[] = await Promise.all(film.characters.map(getId).map(getCharacterById));
-        characterDetails = useDetails<Character>(characters, 'people');
+        const films: Film[] = await Promise.all(character.films.map(getId).map(getFilmById));
+        filmsDetails = useDetails<Film>(films, 'film');
 
-        const planets: Planet[] = await Promise.all(film.planets.map(getId).map(getPlanetById));
-        planetsDetails = useDetails<Planet>(planets, 'planets');
+        const planets: Planet[] = await Promise.all([character.homeworld].map(getId).map(getPlanetById));
+        planetsDetails = useDetails<Planet>(planets, 'planet');
 
-        const starships: Starship[] = await Promise.all(film.starships.map(getId).map(getStarshipById));
-        starshipsDetails = useDetails<Starship>(starships, 'starships');
+        const starships: Starship[] = await Promise.all(character.starships.map(getId).map(getStarshipById));
+        starshipsDetails = useDetails<Starship>(starships, 'starship');
 
-        const vehicles: Vehicle[] = await Promise.all(film.vehicles.map(getId).map(getVehicleById));
-        vehiclesDetails = useDetails<Vehicle>(vehicles, 'vehicles');
+        const vehicles: Vehicle[] = await Promise.all(character.vehicles.map(getId).map(getVehicleById));
+        vehiclesDetails = useDetails<Vehicle>(vehicles, 'vehicle');
 
-        const species: Species[] = await Promise.all(film.species.map(getId).map(getSpeciesById));
+        const species: Species[] = await Promise.all(character.species.map(getId).map(getSpeciesById));
         speciesDetails = useDetails<Species>(species, 'species');
     } finally {
         isLoading.value = false;
@@ -69,24 +69,20 @@ onBeforeMount(async () => {
         :hasError="hasError"
     >
         <app-layout>
-            <template #title v-if="film.title">{{ film.title }}</template>
+            <template #title v-if="character.name">{{ character.name }}</template>
             <template #content>
                 <app-container>
-                    <p class="text-gray-600">Director: <span class="text-white">{{ film.director }}</span></p>
-                    <p class="text-gray-600">Producer: <span class="text-white">{{ film.producer }}</span></p>
-                    <p class="text-gray-600">Release date: <span class="text-white">{{ new Date(film.release_date).toLocaleDateString('ru-RU') }}</span></p>
 
                     <app-card class="flex flex-col justify-between mt-8">
-                        <p class="italic">{{ film.opening_crawl }}</p>
                     </app-card>
 
-                    <template v-if="characterDetails.length">
+                    <template v-if="filmsDetails.length">
                         <app-header
                             level="4"
                             class="my-8 text-white text-2xl"
-                        >Characters</app-header>
+                        >Films</app-header>
 
-                        <app-details :details="characterDetails" />
+                        <app-details :details="filmsDetails" />
                     </template>
 
                     <template v-if="planetsDetails.length">
@@ -127,11 +123,11 @@ onBeforeMount(async () => {
 
                     <p>
                         <app-button
-                            @click="goTo({ name: routeNames.films })"
+                            @click="goTo({ name: routeNames.people })"
                             variant="white"
                             outline
                             class="mt-12"
-                        >Go back to all films</app-button>
+                        >Go back to all characters</app-button>
                     </p>
                 </app-container>
             </template>
