@@ -10,14 +10,9 @@ import AppDetails from '@/shared/ui/details/ui/index.vue';
 import { useRoute } from 'vue-router';
 import { routeNames } from '@/app/routes';
 import { getFilmById } from '@/shared/api/films';
-import { getCharacterById } from '@/shared/api/characters';
-import { getPlanetById } from '@/shared/api/planets';
-import { getStarshipById } from '@/shared/api/starships';
-import { getVehicleById } from '@/shared/api/vehicles';
-import { getSpeciesById } from '@/shared/api/species';
 import { useDetails } from '@/shared/use/details';
 import { useGoTo } from '@/shared/use/goTo';
-import { useId } from '@/shared/use/id';
+import { useDetailsSource } from '@/shared/use/detailsSource';
 
 const goTo = useGoTo();
 const isLoading = ref(true);
@@ -32,7 +27,6 @@ let speciesDetails: Detail[] = []
 
 onBeforeMount(async () => {
     const route = useRoute();
-    const getId = useId();
     const { id } = route.params;
 
     try {
@@ -44,19 +38,19 @@ onBeforeMount(async () => {
             throw error;
         }
 
-        const characters: Character[] = await Promise.all(film.characters.map(getId).map(getCharacterById));
+        const characters: Character[] = await useDetailsSource(film.characters).fetch<Character>();
         characterDetails = useDetails<Character>(characters, 'people');
 
-        const planets: Planet[] = await Promise.all(film.planets.map(getId).map(getPlanetById));
+        const planets: Planet[] = await useDetailsSource(film.planets).fetch<Planet>();
         planetsDetails = useDetails<Planet>(planets, 'planet');
 
-        const starships: Starship[] = await Promise.all(film.starships.map(getId).map(getStarshipById));
+        const starships: Starship[] = await useDetailsSource(film.starships).fetch<Starship>();
         starshipsDetails = useDetails<Starship>(starships, 'starship');
 
-        const vehicles: Vehicle[] = await Promise.all(film.vehicles.map(getId).map(getVehicleById));
+        const vehicles: Vehicle[] = await useDetailsSource(film.vehicles).fetch<Vehicle>();
         vehiclesDetails = useDetails<Vehicle>(vehicles, 'vehicle');
 
-        const species: Species[] = await Promise.all(film.species.map(getId).map(getSpeciesById));
+        const species: Species[] = await useDetailsSource(film.species).fetch<Species>();
         speciesDetails = useDetails<Species>(species, 'species');
     } finally {
         isLoading.value = false;
