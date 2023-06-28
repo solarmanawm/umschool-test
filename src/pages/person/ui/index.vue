@@ -72,8 +72,15 @@ onBeforeMount(async () => {
             <template #title v-if="character.name">{{ character.name }}</template>
             <template #content>
                 <app-container>
+                    <p class="text-gray-600">Gender: <span class="text-white capitalize">{{ character.gender }}</span></p>
 
-                    <app-card class="flex flex-col justify-between mt-8">
+                    <app-card class="flex justify-between mt-8">
+                        <p>Height: <span class="text-yellow-500 capitalize">{{ character.height }}</span></p>
+                        <p>Mass: <span class="text-yellow-500 capitalize">{{ character.mass }}</span></p>
+                        <p>Hair Color: <span class="text-yellow-500 capitalize">{{ character.hair_color }}</span></p>
+                        <p>Skin Color: <span class="text-yellow-500 capitalize">{{ character.skin_color }}</span></p>
+                        <p>Eye Color: <span class="text-yellow-500 capitalize">{{ character.eye_color }}</span></p>
+                        <p>Birth Year: <span class="text-yellow-500 capitalize">{{ character.birth_year }}</span></p>
                     </app-card>
 
                     <template v-if="filmsDetails.length">
