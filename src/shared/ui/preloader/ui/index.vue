@@ -9,7 +9,7 @@ interface Props {
 }
 
 const router = useRouter();
-const props = withDefaults(defineProps<Props>(), {
+withDefaults(defineProps<Props>(), {
     hasError: false,
 });
 </script>
