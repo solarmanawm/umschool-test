@@ -7,7 +7,6 @@ import AppCard from '@/shared/ui/card/ui/index.vue';
 import AppHeader from '@/shared/ui/h/ui/index.vue';
 import AppButton from '@/shared/ui/button/ui/index.vue';
 import AppDetails from '@/shared/ui/details/ui/index.vue';
-import { getId } from '@/app/helpers';
 import { useRoute } from 'vue-router';
 import { routeNames } from '@/app/routes';
 import { getFilmById } from '@/shared/api/films';
@@ -18,6 +17,7 @@ import { getVehicleById } from '@/shared/api/vehicles';
 import { getSpeciesById } from '@/shared/api/species';
 import { useDetails } from '@/shared/use/details';
 import { useGoTo } from '@/shared/use/goTo';
+import { useId } from '@/shared/use/id';
 
 const goTo = useGoTo();
 const isLoading = ref(true);
@@ -32,6 +32,7 @@ let speciesDetails: Detail[] = []
 
 onBeforeMount(async () => {
     const route = useRoute();
+    const getId = useId();
     const { id } = route.params;
 
     try {
