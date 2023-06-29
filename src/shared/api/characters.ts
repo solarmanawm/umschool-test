@@ -1,11 +1,11 @@
 import axios from '@/app/axios';
 
-interface FilmsCharacters {
+interface CharactersResponse {
     results: Character[];
 }
 
-export const getCharacters = async (): Promise<FilmsCharacters> => {
-    const response = await axios.get<FilmsCharacters>('/people/');
+export const getCharacters = async (): Promise<CharactersResponse> => {
+    const response = await axios.get<CharactersResponse>('/people/');
 
     return response.data;
 };

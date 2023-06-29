@@ -59,6 +59,11 @@ export const routes = {
             title: 'Planets',
         },
     },
+    planet: {
+        path: '/planets/:id',
+        name: routeNames.planet,
+        component: () => import('@/pages/planet/ui/index.vue'),
+    },
     species: {
         path: '/species',
         name: routeNames.species,
