@@ -98,4 +98,9 @@ export const routes = {
             title: 'Vehicles',
         },
     },
+    vehicle: {
+        path: '/vehicles/:id',
+        name: routeNames.vehicle,
+        component: () => import('@/pages/vehicles/single/ui/index.vue'),
+    },
 };
