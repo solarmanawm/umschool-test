@@ -72,6 +72,11 @@ export const routes = {
             title: 'Species',
         },
     },
+    specie: {
+        path: '/species/:id',
+        name: routeNames.specie,
+        component: () => import('@/pages/species/single/ui/index.vue'),
+    },
     starships: {
         path: '/starships',
         name: routeNames.starships,

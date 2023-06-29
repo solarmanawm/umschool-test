@@ -44,17 +44,17 @@ onBeforeMount(async () => {
                 :hasError="hasError"
             >
                 <app-container>
-                        <app-card v-for="planet of planets" class="w-full flex justify-between mb-4">
-                            <div class="flex items-center">
-                                <app-header
-                                    level="3"
-                                    class="text-white text-xl"
-                                >{{ planet.name }}</app-header>
-                                <p class="capitalize ml-8 text-sm">Population: <span class="text-white font-bold">{{ planet.population }}</span></p>
-                                <p class="capitalize ml-4 text-sm">Gravity: <span class="text-white font-bold">{{ planet.gravity }}</span></p>
-                            </div>
-                            <p><app-anchor class="text-sm uppercase font-bold text-yellow-500" :to="{ name: routeNames.planet, params: { id: planet.id }}">Details</app-anchor></p>
-                        </app-card>
+                    <app-card v-for="planet of planets" class="w-full flex justify-between mb-4">
+                        <div class="flex items-center">
+                            <app-header
+                                level="3"
+                                class="text-white text-xl"
+                            >{{ planet.name }}</app-header>
+                            <p class="capitalize ml-8 text-sm">Population: <span class="text-white font-bold">{{ planet.population }}</span></p>
+                            <p class="capitalize ml-4 text-sm">Gravity: <span class="text-white font-bold">{{ planet.gravity }}</span></p>
+                        </div>
+                        <p><app-anchor class="text-sm uppercase font-bold text-yellow-500" :to="{ name: routeNames.planet, params: { id: planet.id }}">Details</app-anchor></p>
+                    </app-card>
                 </app-container>
             </app-preloader>
         </template>
