@@ -36,7 +36,7 @@ export const routes = {
     film: {
         path: '/film/:id',
         name: routeNames.film,
-        component: () => import('@/pages/film/ui/index.vue'),
+        component: () => import('@/pages/films/single/ui/index.vue'),
     },
     people: {
         path: '/people',
@@ -49,7 +49,7 @@ export const routes = {
     person: {
         path: '/people/:id',
         name: routeNames.person,
-        component: () => import('@/pages/person/ui/index.vue'),
+        component: () => import('@/pages/people/single/ui/index.vue'),
     },
     planets: {
         path: '/planets',
@@ -62,7 +62,7 @@ export const routes = {
     planet: {
         path: '/planets/:id',
         name: routeNames.planet,
-        component: () => import('@/pages/planet/ui/index.vue'),
+        component: () => import('@/pages/planets/single/ui/index.vue'),
     },
     species: {
         path: '/species',
