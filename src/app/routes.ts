@@ -85,6 +85,11 @@ export const routes = {
             title: 'Starships',
         },
     },
+    starship: {
+        path: '/starships/:id',
+        name: routeNames.starship,
+        component: () => import('@/pages/starships/single/ui/index.vue'),
+    },
     vehicles: {
         path: '/vehicles',
         name: routeNames.vehicles,
