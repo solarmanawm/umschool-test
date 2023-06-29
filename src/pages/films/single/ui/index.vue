@@ -42,13 +42,13 @@ onBeforeMount(async () => {
         characterDetails = useDetails<Character>(characters, 'people');
 
         const planets: Planet[] = await useDetailsSource(film.planets).fetch<Planet>();
-        planetsDetails = useDetails<Planet>(planets, 'planet');
+        planetsDetails = useDetails<Planet>(planets, 'planets');
 
         const starships: Starship[] = await useDetailsSource(film.starships).fetch<Starship>();
-        starshipsDetails = useDetails<Starship>(starships, 'starship');
+        starshipsDetails = useDetails<Starship>(starships, 'starships');
 
         const vehicles: Vehicle[] = await useDetailsSource(film.vehicles).fetch<Vehicle>();
-        vehiclesDetails = useDetails<Vehicle>(vehicles, 'vehicle');
+        vehiclesDetails = useDetails<Vehicle>(vehicles, 'vehicles');
 
         const species: Species[] = await useDetailsSource(film.species).fetch<Species>();
         speciesDetails = useDetails<Species>(species, 'species');

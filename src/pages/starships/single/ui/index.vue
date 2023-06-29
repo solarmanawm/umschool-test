@@ -36,7 +36,7 @@ onBeforeMount(async () => {
         }
 
         const films: Film[] = await useDetailsSource(starship.films).fetch<Film>();
-        filmsDetails = useDetails<Film>(films, 'film');
+        filmsDetails = useDetails<Film>(films, 'films');
 
         const characters: Character[] = await useDetailsSource(starship.pilots).fetch<Character>();
         charactersDetails = useDetails<Character>(characters, 'people');

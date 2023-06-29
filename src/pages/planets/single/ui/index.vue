@@ -36,7 +36,7 @@ onBeforeMount(async () => {
         }
 
         const films: Film[] = await useDetailsSource(planet.films).fetch<Film>();
-        filmsDetails = useDetails<Film>(films, 'film');
+        filmsDetails = useDetails<Film>(films, 'films');
 
         const characters: Character[] = await useDetailsSource(planet.residents).fetch<Character>();
         charactersDetails = useDetails<Character>(characters, 'people');

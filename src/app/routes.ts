@@ -34,7 +34,7 @@ export const routes = {
         },
     },
     film: {
-        path: '/film/:id',
+        path: '/films/:id',
         name: routeNames.film,
         component: () => import('@/pages/films/single/ui/index.vue'),
     },
