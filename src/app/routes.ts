@@ -23,6 +23,7 @@ export const routes = {
         component: Home,
         meta: {
             title: 'Home',
+            auth: false,
         },
     },
     films: {
@@ -31,12 +32,16 @@ export const routes = {
         component: () => import('@/pages/films/ui/index.vue'),
         meta: {
             title: 'Films',
+            auth: true,
         },
     },
     film: {
         path: '/films/:id',
         name: routeNames.film,
         component: () => import('@/pages/films/single/ui/index.vue'),
+        meta: {
+            auth: true,
+        },
     },
     people: {
         path: '/people',
@@ -44,12 +49,16 @@ export const routes = {
         component: () => import('@/pages/people/ui/index.vue'),
         meta: {
             title: 'People',
+            auth: true,
         },
     },
     person: {
         path: '/people/:id',
         name: routeNames.person,
         component: () => import('@/pages/people/single/ui/index.vue'),
+        meta: {
+            auth: true,
+        },
     },
     planets: {
         path: '/planets',
@@ -57,12 +66,16 @@ export const routes = {
         component: () => import('@/pages/planets/ui/index.vue'),
         meta: {
             title: 'Planets',
+            auth: true,
         },
     },
     planet: {
         path: '/planets/:id',
         name: routeNames.planet,
         component: () => import('@/pages/planets/single/ui/index.vue'),
+        meta: {
+            auth: true,
+        },
     },
     species: {
         path: '/species',
@@ -70,12 +83,16 @@ export const routes = {
         component: () => import('@/pages/species/ui/index.vue'),
         meta: {
             title: 'Species',
+            auth: true,
         },
     },
     specie: {
         path: '/species/:id',
         name: routeNames.specie,
         component: () => import('@/pages/species/single/ui/index.vue'),
+        meta: {
+            auth: true,
+        },
     },
     starships: {
         path: '/starships',
@@ -83,12 +100,16 @@ export const routes = {
         component: () => import('@/pages/starships/ui/index.vue'),
         meta: {
             title: 'Starships',
+            auth: true,
         },
     },
     starship: {
         path: '/starships/:id',
         name: routeNames.starship,
         component: () => import('@/pages/starships/single/ui/index.vue'),
+        meta: {
+            auth: true,
+        },
     },
     vehicles: {
         path: '/vehicles',
@@ -96,11 +117,15 @@ export const routes = {
         component: () => import('@/pages/vehicles/ui/index.vue'),
         meta: {
             title: 'Vehicles',
+            auth: true,
         },
     },
     vehicle: {
         path: '/vehicles/:id',
         name: routeNames.vehicle,
         component: () => import('@/pages/vehicles/single/ui/index.vue'),
+        meta: {
+            auth: true,
+        },
     },
 };

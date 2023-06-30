@@ -1,7 +1,22 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { routes } from '@/app/routes';
+import { routeNames, routes } from '@/app/routes';
+import { useLoginStore } from '@/features/login/model';
 
-export const router = createRouter({
+const router = createRouter({
     history: createWebHistory(),
     routes: Object.values(routes),
 });
+
+router.beforeEach((to, _, next) => {
+    const loginStore = useLoginStore();
+
+    if (to.meta?.auth && !loginStore.isLogin) {
+        next({
+            name: routeNames.home,
+        });
+    }
+
+    next();
+});
+
+export default router;
