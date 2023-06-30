@@ -1,7 +1,7 @@
 <script setup lang="ts">
 interface Props {
     variant: 'yellow' | 'white';
-    outline: boolean;
+    outline?: boolean;
 };
 
 const props = defineProps<Props>();
