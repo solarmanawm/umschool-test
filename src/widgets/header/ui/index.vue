@@ -15,7 +15,7 @@ export default {
 <template>
     <header class="border-b border-b-gray-800 py-8">
         <app-container class="flex flex-col items-center">
-            <div class="text-yellow-500 font-bold text-2xl">StarWars Discowery</div>
+            <div class="text-yellow-500 font-bold text-2xl">StarWars Discovery</div>
             <app-nav class="mt-4" :is-login="loginStore.isLogin" />
         </app-container>
     </header>
