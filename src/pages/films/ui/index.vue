@@ -18,8 +18,10 @@ const isLoading = ref(true);
 const hasError = ref(false);
 let films: (Film & { id: string })[] = [];
 
-onBeforeMount(async () => {
+const fetch = async () => {
     try {
+        hasError.value = false;
+        isLoading.value = true;
         const { results } = await getFilms();
         films = results.map((film: Film) => {
             const id = film.url.split('/').filter(e => !!e).pop()!;
@@ -34,6 +36,10 @@ onBeforeMount(async () => {
     } finally {
         isLoading.value = false;
     }
+};
+
+onBeforeMount(async () => {
+    await fetch();
 });
 </script>
 
@@ -44,6 +50,7 @@ onBeforeMount(async () => {
             <app-preloader
                 :isLoading="isLoading"
                 :hasError="hasError"
+                @refresh="fetch"
             >
                 <app-container>
                     <app-row class="-mt-4">

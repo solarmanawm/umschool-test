@@ -18,8 +18,11 @@ const hasError = ref(false);
 const getId = useId();
 let starships: (Starship & { id: string })[] = [];
 
-onBeforeMount(async () => {
+const fetch = async () => {
     try {
+        isLoading.value = true;
+        hasError.value = true;
+
         const { results } = await getStarships();
         starships = results.map((starship: Starship) => {
             return {
@@ -32,6 +35,10 @@ onBeforeMount(async () => {
     } finally {
         isLoading.value = false;
     }
+};
+
+onBeforeMount(async () => {
+    await fetch();
 });
 </script>
 
@@ -42,6 +49,7 @@ onBeforeMount(async () => {
             <app-preloader
                 :isLoading="isLoading"
                 :hasError="hasError"
+                @refresh="fetch"
             >
                 <app-container>
                     <app-card v-for="starship of starships" class="w-full flex justify-between mb-4">

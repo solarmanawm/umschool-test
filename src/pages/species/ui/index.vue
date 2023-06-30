@@ -18,8 +18,11 @@ const hasError = ref(false);
 const getId = useId();
 let species: (Species & { id: string })[] = [];
 
-onBeforeMount(async () => {
+const fetch = async () => {
     try {
+        isLoading.value = true;
+        hasError.value = false;
+
         const { results } = await getSpecies();
         species = results.map((specie: Species) => {
             return {
@@ -32,6 +35,10 @@ onBeforeMount(async () => {
     } finally {
         isLoading.value = false;
     }
+};
+
+onBeforeMount(async () => {
+    await fetch();
 });
 </script>
 
@@ -42,6 +49,7 @@ onBeforeMount(async () => {
             <app-preloader
                 :isLoading="isLoading"
                 :hasError="hasError"
+                @refresh="fetch"
             >
                 <app-container>
                     <app-card v-for="specie of species" class="w-full flex justify-between mb-4">

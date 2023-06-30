@@ -19,14 +19,17 @@ const isLoading = ref(true);
 const hasError = ref(false);
 
 let starship: Starship = {} as Starship;
-let filmsDetails: Detail[] = []
-let charactersDetails: Detail[] = []
+let filmsDetails: Detail[] = [];
+let charactersDetails: Detail[] = [];
 
-onBeforeMount(async () => {
+const fetch = async () => {
     const route = useRoute();
     const { id } = route.params;
 
     try {
+        isLoading.value = true;
+        hasError.value = false;
+
         try {
             starship = await getStarshipById(id as string);
         } catch (error) {
@@ -43,6 +46,10 @@ onBeforeMount(async () => {
     } finally {
         isLoading.value = false;
     }
+};
+
+onBeforeMount(async () => {
+    await fetch();
 });
 </script>
 
@@ -50,6 +57,7 @@ onBeforeMount(async () => {
     <app-preloader
         :isLoading="isLoading"
         :hasError="hasError"
+        @refresh="fetch"
     >
         <app-layout>
             <template #title v-if="starship.name">{{ starship.name }}</template>

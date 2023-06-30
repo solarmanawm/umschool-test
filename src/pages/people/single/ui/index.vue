@@ -25,11 +25,14 @@ let starshipsDetails: Detail[] = []
 let vehiclesDetails: Detail[] = []
 let speciesDetails: Detail[] = []
 
-onBeforeMount(async () => {
+const fetch = async () => {
     const route = useRoute();
     const { id } = route.params;
 
     try {
+        isLoading.value = true;
+        hasError.value = false;
+
         try {
             character = await getCharacterById(id as string);
         } catch (error) {
@@ -55,6 +58,10 @@ onBeforeMount(async () => {
     } finally {
         isLoading.value = false;
     }
+};
+
+onBeforeMount(async () => {
+    await fetch();
 });
 </script>
 

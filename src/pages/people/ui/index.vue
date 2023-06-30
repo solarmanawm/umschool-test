@@ -16,8 +16,11 @@ const isLoading = ref(true);
 const hasError = ref(false);
 let characters: (Character & { id: string })[] = [];
 
-onBeforeMount(async () => {
+const fetch = async () => {
     try {
+        isLoading.value = true;
+        hasError.value = false;
+
         const { results } = await getCharacters();
         characters = results.map((character: Character) => {
             const id = character.url.split('/').filter(e => !!e).pop()!;
@@ -32,6 +35,10 @@ onBeforeMount(async () => {
     } finally {
         isLoading.value = false;
     }
+};
+
+onBeforeMount(async () => {
+    await fetch();
 });
 </script>
 
@@ -42,6 +49,7 @@ onBeforeMount(async () => {
             <app-preloader
                 :isLoading="isLoading"
                 :hasError="hasError"
+                @refresh="fetch"
             >
                 <app-container>
                         <app-card v-for="character of characters" class="w-full flex justify-between mb-4">

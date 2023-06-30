@@ -18,8 +18,11 @@ const hasError = ref(false);
 const getId = useId();
 let planets: (Planet & { id: string })[] = [];
 
-onBeforeMount(async () => {
+const fetch = async () => {
     try {
+        isLoading.value = true;
+        hasError.value = false;
+
         const { results } = await getPlanets();
         planets = results.map((planet: Planet) => {
             return {
@@ -32,6 +35,10 @@ onBeforeMount(async () => {
     } finally {
         isLoading.value = false;
     }
+};
+
+onBeforeMount(async () => {
+    await fetch();
 });
 </script>
 
@@ -42,6 +49,7 @@ onBeforeMount(async () => {
             <app-preloader
                 :isLoading="isLoading"
                 :hasError="hasError"
+                @refresh="fetch"
             >
                 <app-container>
                     <app-card v-for="planet of planets" class="w-full flex justify-between mb-4">

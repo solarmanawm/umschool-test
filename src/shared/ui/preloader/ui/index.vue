@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useRouter } from 'vue-router';
 import AppSpinner from '@/shared/ui/spinner/ui/index.vue';
 import AppButton from '@/shared/ui/button/ui/index.vue';
 
@@ -8,10 +7,18 @@ interface Props {
     hasError?: boolean;
 }
 
-const router = useRouter();
+interface Emits {
+    (event: 'refresh'): void;
+}
+
 withDefaults(defineProps<Props>(), {
     hasError: false,
 });
+
+const emits = defineEmits<Emits>();
+const refresh = () => {
+    emits('refresh');
+};
 </script>
 
 <script lang="ts">
@@ -41,7 +48,7 @@ export default {
         <p class="mt-4">
             <p>
                 <app-button
-                    @click="router.go"
+                    @click="refresh"
                     variant="yellow"
                     outline
                     class="mt-12"
