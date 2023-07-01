@@ -5,6 +5,11 @@ interface Option {
     value: string;
 }
 
+interface FilteringOptions {
+    field: string;
+    values: string[];
+}
+
 interface Sorting {
     value: string;
     order: SortingOrder;

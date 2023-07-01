@@ -54,10 +54,10 @@ export const routes = {
                 { title: 'Gender', value: 'gender' },
                 { title: 'Birth year', value: 'birth_year' },
             ],
-            filtering: [
-                { title: 'Gender', value: 'gender' },
-                { title: 'Birth year', value: 'birth_year' },
-            ],
+            filtering: {
+                field: 'gender',
+                values: ['male', 'female'],
+            },
         },
     },
     person: {
@@ -79,10 +79,6 @@ export const routes = {
                 { title: 'Population', value: 'population' },
                 { title: 'Gravity', value: 'gravity' },
             ],
-            filtering: [
-                { title: 'Population', value: 'population' },
-                { title: 'Gravity', value: 'gravity' },
-            ],
         },
     },
     planet: {
@@ -101,10 +97,6 @@ export const routes = {
             title: 'Species',
             auth: true,
             sorting: [
-                { title: 'Classification', value: 'classification' },
-                { title: 'Language', value: 'language' },
-            ],
-            filtering: [
                 { title: 'Classification', value: 'classification' },
                 { title: 'Language', value: 'language' },
             ],

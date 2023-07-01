@@ -11,10 +11,12 @@ import { useRoute } from 'vue-router';
 import { routeNames } from '@/app/routes';
 import { getCharacters } from '@/shared/api/characters';
 import { useSorting } from '@/features/sorting/model';
+import { useFiltering } from '@/features/filtering/model';
 
 type CharacterWithId = Character & { id: string }
 
 const route = useRoute();
+const filtering = useFiltering();
 const sorting = useSorting();
 const isLoading = ref(true);
 const hasError = ref(false);
@@ -22,12 +24,22 @@ const originalItems = ref<CharacterWithId[]>([]);
 const sortedItems = ref<CharacterWithId[]>([]);
 
 sorting.init((sorting: string, order: SortingOrder) => {
+    if (!sorting) {
+        return;
+    }
+
     sortedItems.value = originalItems.value.sort((prev, next) => {
         if (order === 'ASC') {
             return prev[sorting as keyof Character]!.toString().localeCompare(next[sorting as keyof Character]!.toString());
         } else {
             return next[sorting as keyof Character]!.toString().localeCompare(prev[sorting as keyof Character]!.toString());
         }
+    });
+});
+
+filtering.init((field: string, value: string) => {
+    sortedItems.value = originalItems.value.filter((item) => {
+        return item[field as keyof Character] === value;
     });
 });
 
