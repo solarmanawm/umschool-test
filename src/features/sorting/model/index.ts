@@ -1,6 +1,5 @@
 import { ref, computed } from 'vue';
 import { defineStore } from 'pinia';
-import { useRoute } from 'vue-router';
 
 type Handler = (sorting: string, order: SortingOrder) => void;
 
@@ -20,17 +19,19 @@ export const useSorting = defineStore('sorting', () => {
         sortingHandler(sortingValue.value, value);
     };
 
-    const init = (handler: Handler) => {
-        const route = useRoute();
+    const updateOptions = (newOptions: Option[]) => {
+        options.value = newOptions;
+    };
 
+    const init = (handler: Handler) => {
         sortingHandler = handler;
-        options.value = route.meta.sorting as Option[] || [];
     };
 
     return {
         init,
         updateValue,
         updateOrder,
+        updateOptions,
         options: computed(() => options.value),
     };
 });

@@ -75,6 +75,14 @@ export const routes = {
         meta: {
             title: 'Planets',
             auth: true,
+            sorting: [
+                { title: 'Population', value: 'population' },
+                { title: 'Gravity', value: 'gravity' },
+            ],
+            filtering: [
+                { title: 'Population', value: 'population' },
+                { title: 'Gravity', value: 'gravity' },
+            ],
         },
     },
     planet: {
@@ -92,6 +100,14 @@ export const routes = {
         meta: {
             title: 'Species',
             auth: true,
+            sorting: [
+                { title: 'Classification', value: 'classification' },
+                { title: 'Language', value: 'language' },
+            ],
+            filtering: [
+                { title: 'Classification', value: 'classification' },
+                { title: 'Language', value: 'language' },
+            ],
         },
     },
     specie: {
@@ -109,6 +125,9 @@ export const routes = {
         meta: {
             title: 'Starships',
             auth: true,
+            sorting: [
+                { title: 'Manufacturer', value: 'manufacturer' },
+            ],
         },
     },
     starship: {
@@ -126,6 +145,9 @@ export const routes = {
         meta: {
             title: 'Vehicles',
             auth: true,
+            sorting: [
+                { title: 'Manufacturer', value: 'manufacturer' },
+            ],
         },
     },
     vehicle: {

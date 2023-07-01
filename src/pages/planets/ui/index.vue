@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { onBeforeMount, ref } from 'vue';
+import AppControlPane from '@/widgets/controlPane/ui/index.vue';
 import AppLayout from '@/shared/ui/layout/ui/index.vue';
 import AppPreloader from '@/shared/ui/preloader/ui/index.vue';
 import AppContainer from '@/shared/ui/container/ui/index.vue';
@@ -10,13 +11,25 @@ import { useRoute } from 'vue-router';
 import { useId } from '@/shared/use/id';
 import { routeNames } from '@/app/routes';
 import { getPlanets } from '@/shared/api/planets';
+import { useSorting } from '@/features/sorting/model';
 
 const route = useRoute();
-
+const sorting = useSorting();
 const isLoading = ref(true);
 const hasError = ref(false);
 const getId = useId();
-let planets: (Planet & { id: string })[] = [];
+const originalItems = ref<(Planet & { id: string })[]>([]);
+const sortedItems = ref<(Planet & { id: string })[]>([]);
+
+sorting.init((sorting: string, order: SortingOrder) => {
+    sortedItems.value = originalItems.value.sort((prev, next) => {
+        if (order === 'ASC') {
+            return prev[sorting as keyof Planet]!.toString().localeCompare(next[sorting as keyof Planet]!.toString());
+        } else {
+            return next[sorting as keyof Planet]!.toString().localeCompare(prev[sorting as keyof Planet]!.toString());
+        }
+    });
+});
 
 const fetch = async () => {
     try {
@@ -24,7 +37,7 @@ const fetch = async () => {
         hasError.value = false;
 
         const { results } = await getPlanets();
-        planets = results.map((planet: Planet) => {
+        originalItems.value = results.map((planet: Planet) => {
             return {
                 ...planet,
                 id: getId(planet.url),
@@ -39,6 +52,7 @@ const fetch = async () => {
 
 onBeforeMount(async () => {
     await fetch();
+    sortedItems.value = originalItems.value;
 });
 </script>
 
@@ -46,13 +60,14 @@ onBeforeMount(async () => {
     <app-layout>
         <template #title v-if="route.meta.title">{{ route.meta.title }}</template>
         <template #content>
+            <app-control-pane class="mb-12" />
             <app-preloader
                 :isLoading="isLoading"
                 :hasError="hasError"
                 @refresh="fetch"
             >
                 <app-container>
-                    <app-card v-for="planet of planets" class="w-full flex justify-between mb-4">
+                    <app-card v-for="planet of sortedItems" class="w-full flex justify-between mb-4">
                         <div class="flex items-center">
                             <app-header
                                 level="3"
