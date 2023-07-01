@@ -18,7 +18,6 @@ const sorting = useSorting();
 const isLoading = ref(true);
 const hasError = ref(false);
 const getId = useId();
-let starships: (Starship & { id: string })[] = [];
 const originalItems = ref<(Starship & { id: string })[]>([]);
 const sortedItems = ref<(Starship & { id: string })[]>([]);
 
