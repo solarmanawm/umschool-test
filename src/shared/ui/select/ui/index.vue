@@ -24,7 +24,7 @@ const value = ref('');
         @change="emits('update:modelValue', value)"
         class="bg-white px-6 py-2 rounded text-black"
     >
-        <option selected disabled>Select option</option>
+        <option selected disabled value="">Select option</option>
         <option
             v-for="option of options"
             :value="option.value"
