@@ -4,6 +4,7 @@ import { defineStore } from 'pinia';
 type Handler = (field: string, value: string) => void;
 
 export const useFiltering = defineStore('filtering', () => {
+    const isActive = ref(false);
     const options = ref<string[]>([]);
     const field = ref('');
     const filtering = ref('');
@@ -22,11 +23,23 @@ export const useFiltering = defineStore('filtering', () => {
     const init = (handler: Handler) => {
         sortingHandler = handler;
     };
+
+    const disable = () => {
+        isActive.value = false;
+    };
+
+    const enable = () => {
+        isActive.value = true;
+    };
+
     return {
         init,
+        disable,
+        enable,
         updateValue,
         updateOptions,
         options: computed(() => options.value),
         field: computed(() => field.value),
+        isActive: computed(() => isActive.value),
     };
 });

@@ -4,6 +4,7 @@ import { defineStore } from 'pinia';
 type Handler = (sorting: string, order: SortingOrder) => void;
 
 export const useSorting = defineStore('sorting', () => {
+    const isActive = ref(false);
     const options = ref<Option[]>([]);
     const sortingValue = ref('');
     const sortingOrder = ref<SortingOrder>('' as SortingOrder);
@@ -27,11 +28,22 @@ export const useSorting = defineStore('sorting', () => {
         sortingHandler = handler;
     };
 
+    const disable = () => {
+        isActive.value = false;
+    };
+
+    const enable = () => {
+        isActive.value = true;
+    };
+
     return {
         init,
+        disable,
+        enable,
         updateValue,
         updateOrder,
         updateOptions,
         options: computed(() => options.value),
+        isActive: computed(() => isActive.value),
     };
 });
