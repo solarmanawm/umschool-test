@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { onBeforeMount, ref } from 'vue';
+import AppControlPane from '@/widgets/controlPane/ui/index.vue';
 import AppLayout from '@/shared/ui/layout/ui/index.vue';
 import AppPreloader from '@/shared/ui/preloader/ui/index.vue';
 import AppContainer from '@/shared/ui/container/ui/index.vue';
@@ -9,12 +10,26 @@ import AppAnchor from '@/shared/ui/anchor/ui/index.vue';
 import { useRoute } from 'vue-router';
 import { routeNames } from '@/app/routes';
 import { getCharacters } from '@/shared/api/characters';
+import { useSorting } from '@/features/sorting/model';
+
+type CharacterWithId = Character & { id: string }
 
 const route = useRoute();
-
+const sorting = useSorting();
 const isLoading = ref(true);
 const hasError = ref(false);
-let characters: (Character & { id: string })[] = [];
+const originalItems = ref<CharacterWithId[]>([]);
+const sortedItems = ref<CharacterWithId[]>([]);
+
+sorting.init((sorting: string, order: SortingOrder) => {
+    sortedItems.value = originalItems.value.sort((prev, next) => {
+        if (order === 'ASC') {
+            return prev[sorting as keyof Character]!.toString().localeCompare(next[sorting as keyof Character]!.toString());
+        } else {
+            return next[sorting as keyof Character]!.toString().localeCompare(prev[sorting as keyof Character]!.toString());
+        }
+    });
+});
 
 const fetch = async () => {
     try {
@@ -22,7 +37,7 @@ const fetch = async () => {
         hasError.value = false;
 
         const { results } = await getCharacters();
-        characters = results.map((character: Character) => {
+        originalItems.value = results.map((character: Character) => {
             const id = character.url.split('/').filter(e => !!e).pop()!;
 
             return {
@@ -39,6 +54,7 @@ const fetch = async () => {
 
 onBeforeMount(async () => {
     await fetch();
+    sortedItems.value = originalItems.value;
 });
 </script>
 
@@ -46,13 +62,14 @@ onBeforeMount(async () => {
     <app-layout>
         <template #title v-if="route.meta.title">{{ route.meta.title }}</template>
         <template #content>
+            <app-control-pane class="mb-12" />
             <app-preloader
                 :isLoading="isLoading"
                 :hasError="hasError"
                 @refresh="fetch"
             >
                 <app-container>
-                        <app-card v-for="character of characters" class="w-full flex justify-between mb-4">
+                        <app-card v-for="character of sortedItems" class="w-full flex justify-between mb-4">
                             <div class="flex items-center">
                                 <app-header
                                     level="3"

@@ -1,3 +1,15 @@
+type SortingOrder = 'ASC' | 'DESC'
+
+interface Option {
+    title: string;
+    value: string;
+}
+
+interface Sorting {
+    value: string;
+    order: SortingOrder;
+}
+
 interface Film extends Pick<DetailSource, 'url'> {
     title: string;
     episode_id: number;

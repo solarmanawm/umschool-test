@@ -50,6 +50,14 @@ export const routes = {
         meta: {
             title: 'People',
             auth: true,
+            sorting: [
+                { title: 'Gender', value: 'gender' },
+                { title: 'Birth year', value: 'birth_year' },
+            ],
+            filtering: [
+                { title: 'Gender', value: 'gender' },
+                { title: 'Birth year', value: 'birth_year' },
+            ],
         },
     },
     person: {
