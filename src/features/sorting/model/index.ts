@@ -36,6 +36,16 @@ export const useSorting = defineStore('sorting', () => {
         isActive.value = true;
     };
 
+    const sort = function<T>(items: T[], sorting: string, order: SortingOrder): T[] {
+        return items.sort((prev, next) => {
+            if (order === 'ASC') {
+                return prev[sorting as keyof T]!.toString().localeCompare(next[sorting as keyof T]!.toString());
+            } else {
+                return next[sorting as keyof T]!.toString().localeCompare(prev[sorting as keyof T]!.toString());
+            }
+        });
+    }
+
     return {
         init,
         disable,
@@ -43,6 +53,7 @@ export const useSorting = defineStore('sorting', () => {
         updateValue,
         updateOrder,
         updateOptions,
+        sort,
         options: computed(() => options.value),
         isActive: computed(() => isActive.value),
     };

@@ -24,18 +24,12 @@ const hasError = ref(false);
 const originalItems = ref<CharacterWithId[]>([]);
 const sortedItems = ref<CharacterWithId[]>([]);
 
-sorting.init((sorting: string, order: SortingOrder) => {
+sorting.init((sortingValue: string, order: SortingOrder) => {
     if (!sorting) {
         return;
     }
 
-    sortedItems.value = originalItems.value.sort((prev, next) => {
-        if (order === 'ASC') {
-            return prev[sorting as keyof Character]!.toString().localeCompare(next[sorting as keyof Character]!.toString());
-        } else {
-            return next[sorting as keyof Character]!.toString().localeCompare(prev[sorting as keyof Character]!.toString());
-        }
-    });
+    sortedItems.value = sorting.sort<CharacterWithId>(originalItems.value, sortingValue, order);
 });
 
 filtering.init((field: string, value: string) => {

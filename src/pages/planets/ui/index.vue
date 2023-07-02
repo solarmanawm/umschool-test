@@ -14,22 +14,22 @@ import { routeNames } from '@/app/routes';
 import { getPlanets } from '@/shared/api/planets';
 import { useSorting } from '@/features/sorting/model';
 
+type PlanetWitId = Planet & { id: string }
+
 const route = useRoute();
 const sorting = useSorting();
 const isLoading = ref(true);
 const hasError = ref(false);
 const getId = useId();
-const originalItems = ref<(Planet & { id: string })[]>([]);
-const sortedItems = ref<(Planet & { id: string })[]>([]);
+const originalItems = ref<PlanetWitId[]>([]);
+const sortedItems = ref<PlanetWitId[]>([]);
 
-sorting.init((sorting: string, order: SortingOrder) => {
-    sortedItems.value = originalItems.value.sort((prev, next) => {
-        if (order === 'ASC') {
-            return prev[sorting as keyof Planet]!.toString().localeCompare(next[sorting as keyof Planet]!.toString());
-        } else {
-            return next[sorting as keyof Planet]!.toString().localeCompare(prev[sorting as keyof Planet]!.toString());
-        }
-    });
+sorting.init((sortingValue: string, order: SortingOrder) => {
+    if (!sorting) {
+        return;
+    }
+
+    sortedItems.value = sorting.sort<PlanetWitId>(originalItems.value, sortingValue, order);
 });
 
 const fetch = async () => {

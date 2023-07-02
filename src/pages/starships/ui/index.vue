@@ -14,22 +14,22 @@ import { routeNames } from '@/app/routes';
 import { getStarships } from '@/shared/api/starships';
 import { useSorting } from '@/features/sorting/model';
 
+type StarshipWithId = Starship & { id: string }
+
 const route = useRoute();
 const sorting = useSorting();
 const isLoading = ref(true);
 const hasError = ref(false);
 const getId = useId();
-const originalItems = ref<(Starship & { id: string })[]>([]);
-const sortedItems = ref<(Starship & { id: string })[]>([]);
+const originalItems = ref<StarshipWithId[]>([]);
+const sortedItems = ref<StarshipWithId[]>([]);
 
-sorting.init((sorting: string, order: SortingOrder) => {
-    sortedItems.value = originalItems.value.sort((prev, next) => {
-        if (order === 'ASC') {
-            return prev[sorting as keyof Starship]!.toString().localeCompare(next[sorting as keyof Starship]!.toString());
-        } else {
-            return next[sorting as keyof Starship]!.toString().localeCompare(prev[sorting as keyof Starship]!.toString());
-        }
-    });
+sorting.init((sortingValue: string, order: SortingOrder) => {
+    if (!sorting) {
+        return;
+    }
+
+    sortedItems.value = sorting.sort<StarshipWithId>(originalItems.value, sortingValue, order);
 });
 
 const fetch = async () => {

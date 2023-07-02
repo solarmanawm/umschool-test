@@ -5,7 +5,7 @@ interface Props {
     details: Detail[],
 }
 
-const props = defineProps<Props>();
+defineProps<Props>();
 </script>
 
 <script lang="ts">

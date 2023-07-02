@@ -14,22 +14,22 @@ import { routeNames } from '@/app/routes';
 import { getSpecies } from '@/shared/api/species';
 import { useSorting } from '@/features/sorting/model';
 
+type SpeciesWithId = Species & { id: string };
+
 const route = useRoute();
 const sorting = useSorting();
 const isLoading = ref(true);
 const hasError = ref(false);
 const getId = useId();
-const originalItems = ref<(Species & { id: string })[]>([]);
-const sortedItems = ref<(Species & { id: string })[]>([]);
+const originalItems = ref<SpeciesWithId[]>([]);
+const sortedItems = ref<SpeciesWithId[]>([]);
 
-sorting.init((sorting: string, order: SortingOrder) => {
-    sortedItems.value = originalItems.value.sort((prev, next) => {
-        if (order === 'ASC') {
-            return prev[sorting as keyof Species]!.toString().localeCompare(next[sorting as keyof Species]!.toString());
-        } else {
-            return next[sorting as keyof Species]!.toString().localeCompare(prev[sorting as keyof Species]!.toString());
-        }
-    });
+sorting.init((sortingValue: string, order: SortingOrder) => {
+    if (!sorting) {
+        return;
+    }
+
+    sortedItems.value = sorting.sort<SpeciesWithId>(originalItems.value, sortingValue, order);
 });
 
 const fetch = async () => {

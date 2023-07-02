@@ -14,22 +14,22 @@ import { routeNames } from '@/app/routes';
 import { getVehicles } from '@/shared/api/vehicles';
 import { useSorting } from '@/features/sorting/model';
 
+type VehicleWithId = Vehicle & { id: string }
+
 const route = useRoute();
 const sorting = useSorting();
 const isLoading = ref(true);
 const hasError = ref(false);
 const getId = useId();
-const originalItems = ref<(Vehicle & { id: string })[]>([]);
-const sortedItems = ref<(Vehicle & { id: string })[]>([]);
+const originalItems = ref<VehicleWithId[]>([]);
+const sortedItems = ref<VehicleWithId[]>([]);
 
-sorting.init((sorting: string, order: SortingOrder) => {
-    sortedItems.value = originalItems.value.sort((prev, next) => {
-        if (order === 'ASC') {
-            return prev[sorting as keyof Vehicle]!.toString().localeCompare(next[sorting as keyof Vehicle]!.toString());
-        } else {
-            return next[sorting as keyof Vehicle]!.toString().localeCompare(prev[sorting as keyof Vehicle]!.toString());
-        }
-    });
+sorting.init((sortingValue: string, order: SortingOrder) => {
+    if (!sorting) {
+        return;
+    }
+
+    sortedItems.value = sorting.sort<VehicleWithId>(originalItems.value, sortingValue, order);
 });
 
 const fetch = async () => {
