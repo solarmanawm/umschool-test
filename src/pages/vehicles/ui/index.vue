@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { onBeforeMount, ref } from 'vue';
+import AppInfo from '@/shared/ui/info/ui/index.vue';
 import AppControlPane from '@/widgets/controlPane/ui/index.vue';
 import AppLayout from '@/shared/ui/layout/ui/index.vue';
 import AppPreloader from '@/shared/ui/preloader/ui/index.vue';
@@ -71,9 +72,12 @@ onBeforeMount(async () => {
                         <div class="flex items-center">
                             <app-header
                                 level="3"
-                                class="text-white text-xl"
+                                class="text-white text-xl mr-8"
                             >{{ vehicle.name }}</app-header>
-                            <p class="capitalize ml-8 text-sm">Classification: <span class="text-white font-bold">{{ vehicle.manufacturer }}</span></p>
+                            <app-info
+                                :value="vehicle.manufacturer"
+                                title="Manufacturer"
+                            />
                         </div>
                         <p><app-anchor class="text-sm uppercase font-bold text-yellow-500" :to="{ name: routeNames.vehicle, params: { id: vehicle.id }}">Details</app-anchor></p>
                     </app-card>

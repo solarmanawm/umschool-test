@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { onBeforeMount, ref } from 'vue';
+import AppInfo from '@/shared/ui/info/ui/index.vue';
 import AppControlPane from '@/widgets/controlPane/ui/index.vue';
 import AppLayout from '@/shared/ui/layout/ui/index.vue';
 import AppPreloader from '@/shared/ui/preloader/ui/index.vue';
@@ -85,10 +86,17 @@ onBeforeMount(async () => {
                             <div class="flex items-center">
                                 <app-header
                                     level="3"
-                                    class="text-white text-xl"
+                                    class="text-white text-xl mr-8"
                                 >{{ character.name }}</app-header>
-                                <p class="capitalize ml-8 text-sm">Gender: <span class="text-white font-bold">{{ character.gender }}</span></p>
-                                <p class="capitalize ml-4 text-sm">Birth date: <span class="text-white font-bold">{{ character.birth_year }}</span></p>
+                                <app-info
+                                    :value="character.gender"
+                                    title="Gender"
+                                />
+                                <app-info
+                                    :value="character.birth_year"
+                                    title="Birth year"
+                                    class="ml-4"
+                                />
                             </div>
                             <p><app-anchor class="text-sm uppercase font-bold text-yellow-500" :to="{ name: routeNames.person, params: { id: character.id }}">Details</app-anchor></p>
                         </app-card>

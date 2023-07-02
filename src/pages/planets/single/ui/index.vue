@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { onBeforeMount, ref } from 'vue';
+import AppInfo from '@/shared/ui/info/ui/index.vue';
 import AppLayout from '@/shared/ui/layout/ui/index.vue';
 import AppPreloader from '@/shared/ui/preloader/ui/index.vue';
 import AppContainer from '@/shared/ui/container/ui/index.vue';
@@ -66,13 +67,41 @@ onBeforeMount(async () => {
                     <p class="text-gray-600">Population: <span class="text-white capitalize">{{ planet.population }}</span></p>
 
                     <app-card class="flex justify-between mt-8">
-                        <p>Climate: <span class="text-yellow-500 capitalize">{{ planet.climate }}</span></p>
-                        <p>Diameter: <span class="text-yellow-500 capitalize">{{ planet.diameter }}</span></p>
-                        <p>Gravity: <span class="text-yellow-500 capitalize">{{ planet.gravity }}</span></p>
-                        <p>Orbital Period: <span class="text-yellow-500 capitalize">{{ planet.orbital_period }}</span></p>
-                        <p>Rotation Period: <span class="text-yellow-500 capitalize">{{ planet.rotation_period }}</span></p>
-                        <p>Surface Water: <span class="text-yellow-500 capitalize">{{ planet.surface_water }}</span></p>
-                        <p>Terrain: <span class="text-yellow-500 capitalize">{{ planet.terrain }}</span></p>
+                        <app-info
+                            :value="planet.climate"
+                            title="Climate"
+                            col
+                        />
+                        <app-info
+                            :value="planet.diameter"
+                            title="Diameter"
+                            col
+                        />
+                        <app-info
+                            :value="planet.gravity"
+                            title="Gravity"
+                            col
+                        />
+                        <app-info
+                            :value="planet.orbital_period"
+                            title="Orbital Period"
+                            col
+                        />
+                        <app-info
+                            :value="planet.rotation_period"
+                            title="Rotation Period"
+                            col
+                        />
+                        <app-info
+                            :value="planet.surface_water"
+                            title="Surface Water"
+                            col
+                        />
+                        <app-info
+                            :value="planet.terrain"
+                            title="Terrain"
+                            col
+                        />
                     </app-card>
 
                     <template v-if="filmsDetails.length">

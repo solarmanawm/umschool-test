@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { onBeforeMount, ref } from 'vue';
+import AppInfo from '@/shared/ui/info/ui/index.vue';
 import AppLayout from '@/shared/ui/layout/ui/index.vue';
 import AppPreloader from '@/shared/ui/preloader/ui/index.vue';
 import AppContainer from '@/shared/ui/container/ui/index.vue';
@@ -66,17 +67,56 @@ onBeforeMount(async () => {
                     <p class="text-gray-600">Classification: <span class="text-white capitalize">{{ starship.manufacturer }}</span></p>
 
                     <app-card class="flex justify-between mt-8">
-                        <p>MGLT: <span class="text-yellow-500 capitalize">{{ starship.MGLT }}</span></p>
-                        <p>Cargo Capacity: <span class="text-yellow-500 capitalize">{{ starship.cargo_capacity }}</span></p>
-                        <p>Consumables: <span class="text-yellow-500 capitalize">{{ starship.consumables }}</span></p>
-                        <p>Cost In Credits: <span class="text-yellow-500 capitalize">{{ starship.cost_in_credits }}</span></p>
-                        <p>Crew: <span class="text-yellow-500 capitalize">{{ starship.crew }}</span></p>
-                        <p>Hyperdrive Rating: <span class="text-yellow-500 capitalize">{{ starship.hyperdrive_rating }}</span></p>
-                        <p>Length: <span class="text-yellow-500 capitalize">{{ starship.length }}</span></p>
-                        <p>Max Atmosphering Speed: <span class="text-yellow-500 capitalize">{{ starship.max_atmosphering_speed }}</span></p>
-                        <p>Model: <span class="text-yellow-500 capitalize">{{ starship.model }}</span></p>
-                        <p>Passengers: <span class="text-yellow-500 capitalize">{{ starship.passengers }}</span></p>
-                        <p>Starship Class: <span class="text-yellow-500 capitalize">{{ starship.starship_class }}</span></p>
+                        <app-info
+                            :value="starship.MGLT"
+                            title="MGLT"
+                            col
+                        />
+                        <app-info
+                            :value="starship.cargo_capacity"
+                            title="Cargo Capacity"
+                            col
+                        />
+                        <app-info
+                            :value="starship.consumables"
+                            title="Consumables"
+                            col
+                        />
+                        <app-info
+                            :value="starship.crew"
+                            title="Crew"
+                            col
+                        />
+                        <app-info
+                            :value="starship.hyperdrive_rating"
+                            title="Hyperdrive Rating"
+                            col
+                        />
+                        <app-info
+                            :value="starship.length"
+                            title="Length"
+                            col
+                        />
+                        <app-info
+                            :value="starship.max_atmosphering_speed"
+                            title="Max Atmosphering Speed"
+                            col
+                        />
+                        <app-info
+                            :value="starship.model"
+                            title="Model"
+                            col
+                        />
+                        <app-info
+                            :value="starship.passengers"
+                            title="Passengers"
+                            col
+                        />
+                        <app-info
+                            :value="starship.starship_class"
+                            title="Starship Class"
+                            col
+                        />
                     </app-card>
 
                     <template v-if="filmsDetails.length">

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { onBeforeMount, ref } from 'vue';
+import AppInfo from '@/shared/ui/info/ui/index.vue';
 import AppLayout from '@/shared/ui/layout/ui/index.vue';
 import AppPreloader from '@/shared/ui/preloader/ui/index.vue';
 import AppContainer from '@/shared/ui/container/ui/index.vue';
@@ -66,13 +67,41 @@ onBeforeMount(async () => {
                     <p class="text-gray-600">Classification: <span class="text-white capitalize">{{ species.classification }}</span></p>
 
                     <app-card class="flex justify-between mt-8">
-                        <p>Average Height: <span class="text-yellow-500 capitalize">{{ species.average_height }}</span></p>
-                        <p>Average Lifespan: <span class="text-yellow-500 capitalize">{{ species.average_lifespan }}</span></p>
-                        <p>Designation: <span class="text-yellow-500 capitalize">{{ species.designation }}</span></p>
-                        <p>Eye Colors: <span class="text-yellow-500 capitalize">{{ species.eye_colors }}</span></p>
-                        <p>Hair Colors: <span class="text-yellow-500 capitalize">{{ species.hair_colors }}</span></p>
-                        <p>Language: <span class="text-yellow-500 capitalize">{{ species.language }}</span></p>
-                        <p>Skin Colors: <span class="text-yellow-500 capitalize">{{ species.skin_colors }}</span></p>
+                        <app-info
+                            :value="species.average_height"
+                            title="Average Height"
+                            col
+                        />
+                        <app-info
+                            :value="species.designation"
+                            title="Designation"
+                            col
+                        />
+                        <app-info
+                            :value="species.average_lifespan"
+                            title="Average Lifespan"
+                            col
+                        />
+                        <app-info
+                            :value="species.eye_colors"
+                            title="Eye Colors"
+                            col
+                        />
+                        <app-info
+                            :value="species.hair_colors"
+                            title="Hair Colors"
+                            col
+                        />
+                        <app-info
+                            :value="species.language"
+                            title="Language"
+                            col
+                        />
+                        <app-info
+                            :value="species.skin_colors"
+                            title="Skin Colors"
+                            col
+                        />
                     </app-card>
 
                     <template v-if="filmsDetails.length">

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { onBeforeMount, ref } from 'vue';
+import AppInfo from '@/shared/ui/info/ui/index.vue';
 import AppLayout from '@/shared/ui/layout/ui/index.vue';
 import AppPreloader from '@/shared/ui/preloader/ui/index.vue';
 import AppContainer from '@/shared/ui/container/ui/index.vue';
@@ -66,15 +67,51 @@ onBeforeMount(async () => {
                     <p class="text-gray-600">Classification: <span class="text-white capitalize">{{ vehicle.manufacturer }}</span></p>
 
                     <app-card class="flex justify-between mt-8">
-                        <p>Cargo Capacity: <span class="text-yellow-500 capitalize">{{ vehicle.cargo_capacity }}</span></p>
-                        <p>Consumables: <span class="text-yellow-500 capitalize">{{ vehicle.consumables }}</span></p>
-                        <p>Cost In Credits: <span class="text-yellow-500 capitalize">{{ vehicle.cost_in_credits }}</span></p>
-                        <p>Crew: <span class="text-yellow-500 capitalize">{{ vehicle.crew }}</span></p>
-                        <p>Length: <span class="text-yellow-500 capitalize">{{ vehicle.length }}</span></p>
-                        <p>Max Atmosphering Speed: <span class="text-yellow-500 capitalize">{{ vehicle.max_atmosphering_speed }}</span></p>
-                        <p>Model: <span class="text-yellow-500 capitalize">{{ vehicle.model }}</span></p>
-                        <p>Passengers: <span class="text-yellow-500 capitalize">{{ vehicle.passengers }}</span></p>
-                        <p>Vehicle Class: <span class="text-yellow-500 capitalize">{{ vehicle.vehicle_class }}</span></p>
+                        <app-info
+                            :value="vehicle.cargo_capacity"
+                            title="Cargo Capacity"
+                            col
+                        />
+                        <app-info
+                            :value="vehicle.consumables"
+                            title="Consumables"
+                            col
+                        />
+                        <app-info
+                            :value="vehicle.cost_in_credits"
+                            title="Cost In Credits"
+                            col
+                        />
+                        <app-info
+                            :value="vehicle.crew"
+                            title="Crew"
+                            col
+                        />
+                        <app-info
+                            :value="vehicle.length"
+                            title="Length"
+                            col
+                        />
+                        <app-info
+                            :value="vehicle.max_atmosphering_speed"
+                            title="Max Atmosphering Speed"
+                            col
+                        />
+                        <app-info
+                            :value="vehicle.model"
+                            title="Model"
+                            col
+                        />
+                        <app-info
+                            :value="vehicle.passengers"
+                            title="Passengers"
+                            col
+                        />
+                        <app-info
+                            :value="vehicle.vehicle_class"
+                            title="Vehicle Class"
+                            col
+                        />
                     </app-card>
 
                     <template v-if="filmsDetails.length">

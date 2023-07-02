@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { onBeforeMount, ref } from 'vue';
+import AppInfo from '@/shared/ui/info/ui/index.vue';
 import AppControlPane from '@/widgets/controlPane/ui/index.vue';
 import AppLayout from '@/shared/ui/layout/ui/index.vue';
 import AppPreloader from '@/shared/ui/preloader/ui/index.vue';
@@ -71,10 +72,17 @@ onBeforeMount(async () => {
                         <div class="flex items-center">
                             <app-header
                                 level="3"
-                                class="text-white text-xl"
+                                class="text-white text-xl mr-8"
                             >{{ planet.name }}</app-header>
-                            <p class="capitalize ml-8 text-sm">Population: <span class="text-white font-bold">{{ planet.population }}</span></p>
-                            <p class="capitalize ml-4 text-sm">Gravity: <span class="text-white font-bold">{{ planet.gravity }}</span></p>
+                            <app-info
+                                :value="planet.population"
+                                title="Population"
+                            />
+                            <app-info
+                                :value="planet.gravity"
+                                title="Gravity"
+                                class="ml-4"
+                            />
                         </div>
                         <p><app-anchor class="text-sm uppercase font-bold text-yellow-500" :to="{ name: routeNames.planet, params: { id: planet.id }}">Details</app-anchor></p>
                     </app-card>

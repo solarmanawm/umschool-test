@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { onBeforeMount, ref } from 'vue';
+import AppInfo from '@/shared/ui/info/ui/index.vue';
 import AppLayout from '@/shared/ui/layout/ui/index.vue';
 import AppPreloader from '@/shared/ui/preloader/ui/index.vue';
 import AppContainer from '@/shared/ui/container/ui/index.vue';
@@ -77,12 +78,36 @@ onBeforeMount(async () => {
                     <p class="text-gray-600">Gender: <span class="text-white capitalize">{{ character.gender }}</span></p>
 
                     <app-card class="flex justify-between mt-8">
-                        <p>Height: <span class="text-yellow-500 capitalize">{{ character.height }}</span></p>
-                        <p>Mass: <span class="text-yellow-500 capitalize">{{ character.mass }}</span></p>
-                        <p>Hair Color: <span class="text-yellow-500 capitalize">{{ character.hair_color }}</span></p>
-                        <p>Skin Color: <span class="text-yellow-500 capitalize">{{ character.skin_color }}</span></p>
-                        <p>Eye Color: <span class="text-yellow-500 capitalize">{{ character.eye_color }}</span></p>
-                        <p>Birth Year: <span class="text-yellow-500 capitalize">{{ character.birth_year }}</span></p>
+                        <app-info
+                            :value="character.height"
+                            title="Height"
+                            col
+                        />
+                        <app-info
+                            :value="character.mass"
+                            title="Mass"
+                            col
+                        />
+                        <app-info
+                            :value="character.hair_color"
+                            title="Hair Color"
+                            col
+                        />
+                        <app-info
+                            :value="character.skin_color"
+                            title="Skin Color"
+                            col
+                        />
+                        <app-info
+                            :value="character.eye_color"
+                            title="Eye Color"
+                            col
+                        />
+                        <app-info
+                            :value="character.birth_year"
+                            title="Birth Year"
+                            col
+                        />
                     </app-card>
 
                     <template v-if="filmsDetails.length">
